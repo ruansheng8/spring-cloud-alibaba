@@ -88,7 +88,7 @@ public final class RocketMQUtils {
 		if (StringUtils.isEmpty(nameServer)) {
 			return RocketMQConst.DEFAULT_NAME_SERVER;
 		}
-		return nameServer.replaceAll(",", ";");
+		return nameServer.replace(",", ";");
 	}
 
 	private static final String SQL = "sql:";
