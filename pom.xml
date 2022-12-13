@@ -83,7 +83,7 @@
         <revision>2022.0.0.0-SNAPSHOT</revision>
 
         <!-- Spring Cloud -->
-        <spring.cloud.version>2022.0.0-RC2</spring.cloud.version>
+        <spring.cloud.version>2022.0.0-RC3</spring.cloud.version>
 
         <!-- Spring Boot -->
         <spring-boot.version>3.0.0</spring-boot.version>
@@ -376,6 +376,14 @@
             <url>https://repo.spring.io/milestone</url>
             <snapshots>
                 <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>netflix-candidates</id>
+            <name>Netflix Candidates</name>
+            <url>https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates</url>
+            <snapshots>
+                <enabled>false</enabled>
             </snapshots>
         </repository>
     </repositories>
