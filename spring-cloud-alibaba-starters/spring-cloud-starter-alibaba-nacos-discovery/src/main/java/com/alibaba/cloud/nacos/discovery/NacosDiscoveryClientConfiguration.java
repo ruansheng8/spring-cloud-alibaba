@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2018 the original author or authors.
+ * Copyright 2013-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,18 +62,6 @@ public class NacosDiscoveryClientConfiguration {
 	public NacosWatch nacosWatch(NacosServiceManager nacosServiceManager,
 			NacosDiscoveryProperties nacosDiscoveryProperties) {
 		return new NacosWatch(nacosServiceManager, nacosDiscoveryProperties);
-	}
-
-	/**
-	 * Spring Cloud Gateway HeartBeat .
-	 * publish an event every 30 seconds
-	 * see https://github.com/alibaba/spring-cloud-alibaba/issues/2868
-	 */
-	@Bean
-	@ConditionalOnMissingBean
-	@ConditionalOnProperty(value = "spring.cloud.gateway.discovery.locator.enabled", matchIfMissing = false)
-	public GatewayLocatorHeartBeatPublisher gatewayLocatorHeartBeatPublisher(NacosDiscoveryProperties nacosDiscoveryProperties) {
-		return new GatewayLocatorHeartBeatPublisher(nacosDiscoveryProperties);
 	}
 
 }

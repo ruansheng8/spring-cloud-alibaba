@@ -25,7 +25,6 @@
         <module>sentinel-example/sentinel-spring-cloud-gateway-example</module>
         <module>nacos-example/nacos-discovery-example</module>
         <module>nacos-example/nacos-config-example</module>
-        <module>nacos-example/nacos-config-2.4.x-example</module>
         <module>nacos-example/nacos-gateway-example</module>
         <module>seata-example/business-service</module>
         <module>seata-example/order-service</module>
@@ -64,6 +63,24 @@
                 <version>${maven-deploy-plugin.version}</version>
                 <configuration>
                     <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!--Exclude javadoc jars-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+
+            <!--Exclude sources jars-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <configuration>
+                    <skipSource>true</skipSource>
                 </configuration>
             </plugin>
         </plugins>

@@ -5,6 +5,7 @@
 ### 环境声明
 
 在运行本地示例之前，需要保证本机具备以下的基础环境，如果您的本地没有当前的环境，下面会一步步进行搭建，演示搭建过程。
+当然您也可以通过 Spring Cloud Alibaba （下文简称为SCA）社区提供的docker-compose文件快速启动相应组件。
 
 - Nacos 服务端
 - Seata 服务端
@@ -13,17 +14,17 @@
 
 ### 组件服务版本
 
-本项目的各个组件版本请移步至各个社区的 release 页面进行下载并解压。
+本项目的各个组件版本请移步至各个社区的 release 页面进行下载并解压运行。
 
 - [Nacos: 2.1.0 版本](https://github.com/alibaba/nacos/releases)
 - [Seata: 1.5.1 版本](https://github.com/seata/seata/releases)
 - [RocketMQ: 4.9.4 版本](https://github.com/apache/rocketmq/releases)
 - MySQL: 5.7 版本
 
-### host配置
+### Hosts配置
 
 为了保证代码可以正常启动，请先配置好本机的 host 映射，在配置文件中新增如下的映射。
-```sh
+```shell
 # for integrated-example
 127.0.0.1 integrated-mysql
 127.0.0.1 nacos-server
@@ -41,7 +42,7 @@
 
 针对第一个场景，订单、账户、库存微服务都需要各自的数据库，而第二个场景模拟点赞也需要存储点赞信息的数据库。
 
-运行 `spring-cloud-alibaba-examples/integrated-example/sql/init.sql` 的 sql 脚本一键创建业务所需的环境以及 Seata 相关的表。
+运行 `spring-cloud-alibaba-examples/integrated-example/config-init/sql/init.sql` 的 sql 脚本一键创建业务所需的环境以及 Seata 相关的表。
 
 ### Nacos配置
 
@@ -51,7 +52,7 @@
 
 为了便于 example 的演示，这里采用 Nacos 的`standalone`模式启动，进入到 Nacos 解压后的目录下，执行如下命令。
 
-```sh
+```shell
 #Linux/Mac环境
 sh bin/startup.sh -m standalone
 #如果您是Ubuntu环境，执行上述命令启动报错提示[[符号找不到，可以执行如下的命令
@@ -62,9 +63,15 @@ bash bin/startup.sh -m standalone
 
 #### 新增配置文件
 
-在批量导入配置之前，请先修改`integrated-example/config/datasource-config.yaml` 中的数据源配置(用户名和密码)。
+在批量导入配置之前，请先修改`spring-cloud-alibaba-examples/integrated-example/config-init/config/datasource-config.yaml` 中的数据源配置**(用户名和密码)**。
 
-之后运行`spring-cloud-alibaba-examples/integrated-example/scripts/nacos-config-quick.sh` 来完成所有微服务配置的一键导入。
+之后运行`spring-cloud-alibaba-examples/integrated-example/config-init/scripts/nacos-config-quick.sh` 来完成所有微服务配置的一键导入。
+
+```shell
+# linux
+sh nacos-config-quick.sh
+# windows 可以使用git bash来完成配置的导入 执行命令同上
+```
 
 ### Seata 配置
 
@@ -76,7 +83,7 @@ Seata 的 db 模式需要额外配置数据库信息以及修改 Seata 服务端
 
 进入到 release 解压后的 seata 目录中，执行如下命令。
 
-```sh
+```shell
 #Linux/Mac环境
 sh ./bin/seata-server.sh
 #Win环境
@@ -91,7 +98,7 @@ Seata 服务启动后可以启动 RocketMQ 的 NameServer 以及 Broker 服务�
 
 #### 启动 NameServer
 
-```sh
+```shell
 #Linux/Mac环境
 sh bin/mqnamesrv
 #Win环境
@@ -100,27 +107,27 @@ sh bin/mqnamesrv
 
 #### 启动 Broker
 
-```sh
+```shell
 #Linux/Mac环境
 sh bin/mqbroker
 #Win环境
-.\bin\mqbroker.cmd
+.\bin\mqbroker.cmd -n localhost:9876
 ```
 
 ## 运行 Demo 示例
 
 准备工作完成后可以运行 demo 示例，主要根据不同的使用场景，可以分别体验用户下单(分布式事务能力)以及模拟高流量点赞(熔断限流以及削峰填谷的能力)。
 
-首先需要分别启动`integrated_frontend`以及`integrated_gateway`的工程。
+首先需要分别启动`integrated-frontend`以及`integrated-gateway`微服务应用。
 
-- gateway 模块是整个最佳实践实例的网关。
-- frontend 为最佳实践的简易前端页面。
+- `integrated-gateway` 模块是整个最佳实践示例的网关。
+- `integrated-frontend` 为最佳实践示例的简易前端页面。
 
 ### 分布式事务能力
 
 #### 场景说明
 
-针对分布式事务能力，我们提供了**用户下单购买货物的场景**，下单后：
+针对分布式事务能力，SCA社区提供了**用户下单购买货物的场景**，下单后：
 
 - 先请求库存模块，扣减库存
 - 扣减账户余额
@@ -128,11 +135,11 @@ sh bin/mqbroker
 
 ##### 启动测试
 
-分别启动`integrated_storage`,`integrated_account`,`integrated_order`三个微服务。
+分别启动`integrated-storage`,`integrated-account`,`integrated-order`三个微服务应用。
 
 访问`http://integrated-frontend:8080/order` 来体验对应场景。
 
-直接点击下单按钮提交表单，我们模拟客户端向网关发送了一个创建订单的请求。
+直接点击下单按钮提交表单，应用模拟客户端向网关发送了一个创建订单的请求。
 
 - 用户的 userId 为 admin
 - 用户下单的商品编号为1号
@@ -142,9 +149,9 @@ sh bin/mqbroker
 
 在本 demo 示例中，为了便于演示，每件商品的单价都为2。
 
-而在前面的准备工作中，**初始化业务数据库表**的时候我们新建了一个用户 userId = admin，余额为 3 元；同时新建了一个编号为 1 号的商品，库存为 100 件。
+而在前面的准备工作中，**初始化业务数据库表**的时候应用新建了一个用户，用户userId 为 admin，余额为 3 元；同时新建了一个编号为 1 号的商品，库存为 100 件。
 
-因此通过上述的操作，我们会创建一个订单，扣减对应商品编号为 1 号的库存个数(100-1=99)，扣减 admin 用户的余额(3-2=1)。
+因此通过上述的操作，应用会创建一个订单，扣减对应商品编号为 1 号的库存个数(100-1=99)，扣减 admin 用户的余额(3-2=1)。
 
 ![](https://my-img-1.oss-cn-hangzhou.aliyuncs.com/image-20221016155429801.png)
 
@@ -158,14 +165,14 @@ sh bin/mqbroker
 
 #### 场景说明
 
-针对大流量背景下的服务熔断限流，削峰填谷，我们提供了**用户为商品进行点赞的场景**。在此场景下，我们提供了两种应对大流量的处理方式。
+针对大流量背景下的服务熔断限流，削峰填谷，SCA社区提供了**用户为商品进行点赞的场景**。在此场景下，SCA社区提供了两种应对大流量的处理方式。
 
 - Sentinel 在网关侧绑定指定网关路由进行服务的熔断降级。
 - RocketMQ 进行流量削峰填谷，在大流量请求下，生产者向 RocketMQ 发送消息，而消费者则通过可配置的消费速率进行拉取消费，减少大流量直接请求数据库增加点赞请求的压力。
 
 #### 启动测试
 
-分别启动`integrated_provider`以及`integrated_consumer`模块。
+分别启动`integrated-praise-provider`以及`integrated-praise-consumer`模块。
 
 - Sentinel 服务熔断降级
 
@@ -183,7 +190,7 @@ sh bin/mqbroker
 
 访问`http://integrated-frontend:8080/rocketmq` 体验对应场景。
 
-由于我们之前在 Nacos 中配置了`integrated-consumer`消费者模块的消费速率以及间隔，在点击按钮时我们模拟 1000 个点赞请求，针对 1000 个点赞请求，`integrated_provider`
+由于之前在 Nacos 中配置了`integrated-praise-consumer`消费者模块的消费速率以及间隔，在点击按钮时应用模拟 1000 个点赞请求，针对 1000 个点赞请求，`integrated-praise-provider`
 会将 1000 次请求都向 Broker 投递消息，而在消费者模块中会根据配置的消费速率进行消费，向数据库更新点赞的商品数据，模拟大流量下 RocketMQ 削峰填谷的特性。
 
 可以看到数据库中点赞的个数正在动态更新。

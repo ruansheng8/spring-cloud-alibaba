@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2018 the original author or authors.
+ * Copyright 2013-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,7 @@ package com.alibaba.cloud.nacos.discovery;
 
 import com.alibaba.cloud.nacos.NacosServiceAutoConfiguration;
 import com.alibaba.cloud.nacos.registry.NacosServiceRegistryAutoConfiguration;
-import com.alibaba.cloud.nacos.utils.UtilIPv6AutoConfiguration;
+import com.alibaba.cloud.nacos.util.UtilIPv6AutoConfiguration;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.boot.autoconfigure.AutoConfigurations;
@@ -74,22 +74,6 @@ public class NacosDiscoveryClientConfigurationTest {
 	public void testNacosWatchEnabled() {
 		contextRunner.withPropertyValues("spring.cloud.nacos.discovery.watch.enabled=true")
 				.run(context -> assertThat(context).hasSingleBean(NacosWatch.class));
-	}
-
-	@Test
-	public void testDefaultGatewayLocatorHeartBeatPublisher() {
-		contextRunner.run(context ->
-				assertThat(context).doesNotHaveBean(GatewayLocatorHeartBeatPublisher.class)
-		);
-	}
-
-	@Test
-	public void testGatewayLocatorHeartBeatPublisherEnabled() {
-		contextRunner
-				.withPropertyValues("spring.cloud.gateway.discovery.locator.enabled=true")
-				.run(context ->
-						assertThat(context).hasSingleBean(GatewayLocatorHeartBeatPublisher.class)
-				);
 	}
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2018 the original author or authors.
+ * Copyright 2013-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.alibaba.cloud.nacos.utils;
+package com.alibaba.cloud.nacos.util;
 
 import com.alibaba.cloud.nacos.ConditionalOnNacosDiscoveryEnabled;
 
@@ -37,8 +37,8 @@ public class UtilIPv6AutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public InetIPv6Util inetIPv6Util(InetUtilsProperties properties) {
-		return new InetIPv6Util(properties);
+	public InetIPv6Utils inetIPv6Utils(InetUtilsProperties properties) {
+		return new InetIPv6Utils(properties);
 	}
 
 }

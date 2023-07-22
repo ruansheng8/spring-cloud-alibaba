@@ -1,5 +1,5 @@
 /*
- * Copyright 2013-2022 the original author or authors.
+ * Copyright 2013-2023 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -95,8 +95,8 @@ public class DockingInterfaceExample {
 	 * @param group group
 	 * @return boolean
 	 */
-	@RequestMapping("/remoteConfig")
-	public boolean remoteConfig(@RequestParam("dataId") String dataId,
+	@RequestMapping("/removeConfig")
+	public boolean removeConfig(@RequestParam("dataId") String dataId,
 			@RequestParam(value = "group", required = false) String group)
 			throws NacosException {
 		if (StringUtils.isEmpty(group)) {

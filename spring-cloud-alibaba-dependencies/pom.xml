@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies-parent</artifactId>
-        <version>3.1.4</version>
+        <version>3.1.5</version>
         <relativePath/>
     </parent>
 
@@ -18,10 +18,10 @@
     <description>Spring Cloud Alibaba Dependencies</description>
 
     <properties>
-        <revision>2021.0.4.0-SNAPSHOT</revision>
-        <sentinel.version>1.8.5</sentinel.version>
-        <seata.version>1.5.2</seata.version>
-        <nacos.client.version>2.0.4</nacos.client.version>
+        <revision>2021.0.5.0</revision>
+        <sentinel.version>1.8.6</sentinel.version>
+        <seata.version>1.6.1</seata.version>
+        <nacos.client.version>2.2.0</nacos.client.version>
         <spring.context.support.version>1.0.11</spring.context.support.version>
 
         <!-- Maven Plugin Versions -->
@@ -38,12 +38,6 @@
             <dependency>
                 <groupId>com.alibaba.nacos</groupId>
                 <artifactId>nacos-client</artifactId>
-                <version>${nacos.client.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba.nacos</groupId>
-                <artifactId>nacos-config</artifactId>
                 <version>${nacos.client.version}</version>
             </dependency>
 
@@ -233,7 +227,6 @@
                 <artifactId>spring-context-support</artifactId>
                 <version>${spring.context.support.version}</version>
             </dependency>
-
             <!-- Testing Dependencies -->
 
         </dependencies>
